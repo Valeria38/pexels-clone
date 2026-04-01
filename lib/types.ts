@@ -1,5 +1,5 @@
 export interface ImageResponse {
-  photos: Image[];
+  photos: Photo[];
   page: number;
   per_page: number;
   total_results: number;
@@ -7,7 +7,7 @@ export interface ImageResponse {
   prev_page?: string;
 }
 
-export interface Image {
+export interface Photo {
   alt: string;
   url: string;
   id: number;
@@ -18,5 +18,9 @@ export interface Image {
     small: string;
     medium: string;
     large: string;
+    large2x: string;
   };
+  width: number;
+  height: number;
+  avg_color?: string;
 }
