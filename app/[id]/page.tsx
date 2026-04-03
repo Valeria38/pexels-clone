@@ -7,6 +7,9 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import DownloadPhoto from "@/components/DownloadPhoto";
+import LikeButton from "@/components/LikeButton";
+import { cookies } from "next/headers";
+import { supabase } from "@/lib/supabase";
 
 interface PhotoDetailsProps {
   params: Promise<{ id: string }>;
@@ -14,14 +17,23 @@ interface PhotoDetailsProps {
 const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   const { id } = await params;
   const response = await getPhoto(id);
+  const cookieStore = await cookies();
+  const guestId = cookieStore.get("guest_id")?.value;
+  console.log("r", response);
+  const { data: like } = await supabase
+    .from("likes")
+    .select("*")
+    .eq("photo_id", id)
+    .eq("user_id", guestId)
+    .single();
 
   console.log("res", response);
 
   const ratio = response.width / response.height;
+  if (!response) return null;
   return (
     <div className="min-h-screen bg-white pt-10">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Автор */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-200">
             <UserIcon className="text-gray-400 size-10" />
@@ -40,16 +52,9 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
           </div>
         </div>
 
-        {/* Кнопки действий */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <button className="hidden sm:flex cursor-pointer p-3 text-gray-500 hover:bg-gray-100 rounded-xl transition-colors border border-gray-200">
-            <HeartIcon className="size-10" />
-          </button>
-          <SharePhoto
-            url={response.url}
-            original={response.src.original}
-            photographer={response.photographer}
-          />
+          <LikeButton photoId={response.id} isLiked={!!like} />
+          <SharePhoto url={response.url} photographer={response.photographer} />
           <DownloadPhoto
             imageUrl={response.src.original}
             filename={response.alt.split(" ").join("_")}
@@ -121,7 +126,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
             {["Nature", "Wallpaper", "Background"].map((tag) => (
               <span
                 key={tag}
-                className="px-3  bg-gray-100 rounded-xl text-sm text-gray-600 hover:bg-gray-200 cursor-pointer flex items-center"
+                className="bg-gray-100 rounded-xl text-sm text-gray-600 hover:bg-gray-200 cursor-pointer flex items-center h-fit py-2 px-4"
               >
                 {tag}
               </span>

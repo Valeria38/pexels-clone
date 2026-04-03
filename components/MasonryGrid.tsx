@@ -20,15 +20,16 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
       className="masonry-grid"
       columnClassName="masonry-grid_column"
     >
-      {photos.map(({ alt, id, src: { original } }) => (
+      {photos.map(({ alt, id, src: { original, large } }) => (
         <div key={id}>
           <Link href={`/${id}`}>
             <Image
               alt={alt}
-              src={original}
+              src={large}
               height={500}
               width={500}
               className="mb-4 break-inside-avoid"
+              // className="w-full h-auto mb-4 break-inside-avoid rounded-lg"
             />
           </Link>
         </div>
