@@ -33,7 +33,7 @@ const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
   return (
     <button
       onClick={toggleLike}
-      className={`hidden sm:flex cursor-pointer p-3 border border-gray-200 hover:bg-gray-100 rounded-xl transition-colors`}
+      className={`sm:flex cursor-pointer p-3 border border-gray-200 hover:bg-gray-100 rounded-xl transition-colors`}
     >
       <HeartIcon
         className={`size-6 ${

@@ -1,11 +1,7 @@
 import { getPhoto } from "@/lib/pexels";
 import Image from "next/image";
 import SharePhoto from "@/components/SharePhoto";
-import {
-  HeartIcon,
-  UserIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/outline";
+import { UserIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
@@ -19,15 +15,13 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   const response = await getPhoto(id);
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
-  console.log("r", response);
+
   const { data: like } = await supabase
     .from("likes")
     .select("*")
     .eq("photo_id", id)
     .eq("user_id", guestId)
     .single();
-
-  console.log("res", response);
 
   const ratio = response.width / response.height;
   if (!response) return null;

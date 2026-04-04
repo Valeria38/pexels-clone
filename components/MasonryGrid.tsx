@@ -2,11 +2,41 @@
 import { Photo } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import Masonry from "react-masonry-css";
 
 interface PhotosProps {
   photos: Photo[];
 }
+
+interface IPhotoImageProps {
+  alt: string;
+  src: string;
+  height: number;
+  width: number;
+}
+
+const PhotoImage = ({ alt, src, height, width }: IPhotoImageProps) => {
+  const [loading, setLoading] = useState(false);
+  return (
+    <div
+      className={`relative w-full bg-gray-200 ${
+        !loading ? "animate-pulse" : ""
+      }`}
+      style={{ aspectRatio: `${width / height}` }}
+    >
+      <Image
+        alt={alt}
+        src={src}
+        onLoad={() => setLoading(true)}
+        fill
+        className={`duration-700 ease-in-out ${
+          loading ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </div>
+  );
+};
 
 const MasonryGrid = ({ photos }: PhotosProps) => {
   return (
@@ -20,17 +50,10 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
       className="masonry-grid"
       columnClassName="masonry-grid_column"
     >
-      {photos.map(({ alt, id, src: { original, large } }) => (
+      {photos.map(({ alt, id, src: { large }, width, height }) => (
         <div key={id}>
           <Link href={`/${id}`}>
-            <Image
-              alt={alt}
-              src={large}
-              height={500}
-              width={500}
-              className="mb-4 break-inside-avoid"
-              // className="w-full h-auto mb-4 break-inside-avoid rounded-lg"
-            />
+            <PhotoImage src={large} width={width} height={height} alt={alt} />
           </Link>
         </div>
       ))}
