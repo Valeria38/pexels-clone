@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import DownloadPhoto from "./DownloadPhoto";
 import LikeButton from "./LikeButton";
+import { useState } from "react";
 
 interface IDetailsModalProps {
   src: string;
@@ -28,6 +29,8 @@ const DetailsModal = ({
 }: IDetailsModalProps) => {
   const format = src.split(".")[src.split(".").length - 1];
   const { back } = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const ratio = width / height;
   return (
     <Dialog open={true} onClose={back} className="relative z-50">
@@ -53,9 +56,12 @@ const DetailsModal = ({
                 width: ratio > 1 ? "600px" : "380px",
                 maxWidth: "100%",
               }}
-              className="w-full flex justify-center"
+              className={`rounded-xl w-full flex justify-center bg-gray-200 ${
+                !loading ? "animate-pulse" : ""
+              }`}
             >
               <Image
+                onLoad={() => setLoading(true)}
                 src={src}
                 alt={alt}
                 width={640}
@@ -65,7 +71,9 @@ const DetailsModal = ({
                   height: "auto",
                   aspectRatio: `${ratio}`,
                 }}
-                className="rounded-xl object-contain bg-gray-50"
+                className={`rounded-xl  object-contain duration-700 ease-in-out ${
+                  loading ? "opacity-100" : "opacity-0"
+                }`}
               />
             </div>
             <div className="flex gap-4 w-full">

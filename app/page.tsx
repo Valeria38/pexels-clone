@@ -1,12 +1,12 @@
 import { getPhotos } from "@/lib/pexels";
-import MasonryGrid from "@/components/MasonryGrid";
+import InfinitePhotoList from "@/components/InfinitePhotoList";
 
 export default async function Home() {
   const { photos } = await getPhotos();
 
   return (
     <section className="w-full px-7.5">
-      {photos && <MasonryGrid photos={photos} />}
+      {photos && <InfinitePhotoList initialPhotos={photos} />}
     </section>
   );
 }
