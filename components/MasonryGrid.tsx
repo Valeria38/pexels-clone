@@ -14,9 +14,16 @@ interface IPhotoImageProps {
   src: string;
   height: number;
   width: number;
+  priority: boolean;
 }
 
-export const PhotoImage = ({ alt, src, height, width }: IPhotoImageProps) => {
+export const PhotoImage = ({
+  alt,
+  src,
+  height,
+  width,
+  priority,
+}: IPhotoImageProps) => {
   const [loading, setLoading] = useState(false);
   return (
     <div
@@ -30,6 +37,7 @@ export const PhotoImage = ({ alt, src, height, width }: IPhotoImageProps) => {
         src={src}
         onLoad={() => setLoading(true)}
         fill
+        priority={priority}
         sizes="(max-width: 568px) 100vw, (max-width: 768px) 33.3vw, (max-width: 1200px) 25vw, 100vw"
         className={`duration-700 ease-in-out ${
           loading ? "opacity-100" : "opacity-0"
@@ -51,10 +59,16 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
       className="masonry-grid"
       columnClassName="masonry-grid_column"
     >
-      {photos.map(({ alt, id, src: { large }, width, height }) => (
+      {photos.map(({ alt, id, src: { large }, width, height }, idx) => (
         <div key={alt}>
           <Link href={`/${id}`} scroll={false}>
-            <PhotoImage src={large} width={width} height={height} alt={alt} />
+            <PhotoImage
+              priority={idx < 10}
+              src={large}
+              width={width}
+              height={height}
+              alt={alt}
+            />
           </Link>
         </div>
       ))}

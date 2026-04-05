@@ -13,7 +13,8 @@ export async function getPhotos(page: number = 1): Promise<ImageResponse> {
       method: "GET",
     }
   );
-  return await response.json();
+  const res = await response.json();
+  return res;
 }
 
 export async function getPhoto(id: string): Promise<Photo> {

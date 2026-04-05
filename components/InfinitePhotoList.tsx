@@ -24,13 +24,6 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
 
     const observer = new IntersectionObserver(
       async (entries) => {
-        console.log(
-          "intersecting",
-          entries[0].isIntersecting,
-          hasMore,
-          !loading,
-          window.scrollY
-        );
         if (
           entries[0].isIntersecting &&
           hasMore &&
@@ -59,13 +52,16 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
     if (newPhotos.photos.length === 0) {
       setHasMore(false);
     } else {
-      setPhotos((prev) => [...prev, ...newPhotos.photos]);
+      setPhotos((prev) => {
+        const uniqueNewPhotos = newPhotos.photos.filter(
+          (newPhoto) => !prev.some((existing) => existing.id === newPhoto.id)
+        );
+        return [...prev, ...uniqueNewPhotos];
+      });
       setPage((prev) => prev + 1);
     }
     setLoading(false);
   }, [page, loading, hasMore]);
-
-  console.log("photos", photos);
 
   return (
     <div className="min-h-screen">
