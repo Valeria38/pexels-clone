@@ -19,6 +19,8 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
   const observerTarget = useRef(null);
   const isModalOpen = !!params.id;
 
+  console.log("photos", photos);
+
   useEffect(() => {
     if (isModalOpen) return;
 
@@ -42,8 +44,8 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
       observer.observe(observerTarget.current);
     }
 
-    return () => observer.unobserve(observerTarget.current!);
-  }, [hasMore, loading, isModalOpen]);
+    return () => observer.disconnect();
+  }, [hasMore, isModalOpen, loading]);
 
   const loadMorePhotos = useCallback(async () => {
     setLoading(true);
@@ -61,7 +63,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
       setPage((prev) => prev + 1);
     }
     setLoading(false);
-  }, [page, loading, hasMore]);
+  }, [page, hasMore]);
 
   return (
     <div className="min-h-screen">

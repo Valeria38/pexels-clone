@@ -2,8 +2,9 @@
 import { Photo } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
+import Loader from "./Loader";
 
 interface PhotosProps {
   photos: Photo[];
@@ -48,19 +49,24 @@ export const PhotoImage = ({
 };
 
 const MasonryGrid = ({ photos }: PhotosProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return <Loader />;
   return (
     <Masonry
       breakpointCols={{
         default: 4,
-        1100: 3,
-        700: 2,
-        500: 1,
+        1439: 3,
+        1199: 2,
+        767: 1,
       }}
       className="masonry-grid"
       columnClassName="masonry-grid_column"
     >
       {photos.map(({ alt, id, src: { large }, width, height }, idx) => (
-        <div key={alt}>
+        <div key={id}>
           <Link href={`/${id}`} scroll={false}>
             <PhotoImage
               priority={idx < 10}
