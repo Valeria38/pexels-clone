@@ -1,18 +1,20 @@
-import { getPhotos } from "@/lib/pexels";
+import { getPhotos, searchPhotos } from "@/lib/pexels";
 import InfinitePhotoList from "@/components/InfinitePhotoList";
 import SearchBar from "@/components/SearchBar";
 
-export default async function Home() {
-  const { photos } = await getPhotos();
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  const { query } = await searchParams;
+  const currentQuery = query || "nature";
+  const { photos } = await searchPhotos(currentQuery);
 
   return (
     <section className="w-full px-7.5">
-      {photos && (
-        <>
-          <SearchBar />
-          <InfinitePhotoList initialPhotos={photos} />
-        </>
-      )}
+      <SearchBar query={currentQuery} />
+      {photos && <InfinitePhotoList initialPhotos={photos} key={query} />}
     </section>
   );
 }

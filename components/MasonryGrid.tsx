@@ -58,9 +58,10 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
     <Masonry
       breakpointCols={{
         default: 4,
-        1439: 3,
-        1199: 2,
-        767: 1,
+        1439: 4,
+        1199: 3,
+        767: 2,
+        500: 1,
       }}
       className="masonry-grid"
       columnClassName="masonry-grid_column"
