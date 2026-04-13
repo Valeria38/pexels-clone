@@ -2,6 +2,7 @@
 import { supabase } from "@/lib/supabase";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
+import Button from "./Button";
 
 interface ILikeButtonProps {
   photoId: number;
@@ -31,16 +32,13 @@ const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
     }
   };
   return (
-    <button
-      onClick={toggleLike}
-      className={`sm:flex cursor-pointer p-3 border border-gray-200 hover:bg-gray-100 rounded-xl transition-colors`}
-    >
+    <Button onClick={toggleLike} color="gray" className={`p-2.5`}>
       <HeartIcon
         className={`size-6 ${
           liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"
         }`}
       />
-    </button>
+    </Button>
   );
 };
 

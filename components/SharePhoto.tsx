@@ -11,6 +11,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { copyLink } from "@/lib/utils";
 import Copy from "@/assets/copy.svg";
+import Button from "./Button";
 
 interface SharePhotoProps {
   url: string;
@@ -49,13 +50,10 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
   const displayValue = `Photo by ${photographer}`;
   return (
     <>
-      <button
-        onClick={toggleModal}
-        className="cursor-pointer flex items-center gap-2.5 rounded-xl px-4 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all shadow-md"
-      >
-        <ShareIcon className="size-6" />
+      <Button onClick={toggleModal}>
         Share
-      </button>
+        <ShareIcon className="size-6" />
+      </Button>
 
       <Dialog open={opened} onClose={setOpened} className="relative z-50">
         <DialogBackdrop
@@ -92,7 +90,6 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-gray-50 rounded-full border border-gray-100 hover:bg-gray-100 hover:border-gray-200 transition-all group"
                     title={`Share on ${alt}`}
                   >
                     <Image
@@ -116,7 +113,7 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     {displayValue}
                   </span>
 
-                  <button
+                  <Button
                     onClick={() =>
                       copyLink(`${window.location.origin}${pathname}`)
                     }
@@ -124,7 +121,7 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     title="Copy link to clipboard"
                   >
                     <Copy size={18} className="cursor-pointer" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </DialogPanel>

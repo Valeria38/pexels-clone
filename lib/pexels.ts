@@ -24,3 +24,14 @@ export async function getPhoto(id: string): Promise<Photo> {
   });
   return await response.json();
 }
+
+export async function searchPhotos(query: string): Promise<Photo> {
+  const response = await fetch(
+    `https://api.pexels.com/v1/search?query=${query}&per_page=40`,
+    {
+      headers,
+      method: "GET",
+    }
+  );
+  return await response.json();
+}
