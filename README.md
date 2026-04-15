@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pexels Clone 📸
 
-## Getting Started
+A modern, high-performance image discovery application built with **Next.js 15** and **Pexels API**. This project demonstrates advanced routing patterns, server-side data fetching, and seamless integration with **Supabase** for persistent data storage.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Dynamic Image Search:** Real-time photo discovery powered by the Pexels API.
+- **Advanced Routing (Intercepting & Parallel Routes):** Utilizes Next.js slots and **intercepting routes** to display photo details in a modal without losing the background page context—perfect for a seamless user experience.
+- **Persistent Likes System:** Users can save their favorite photos to a **Supabase (PostgreSQL)** database.
+- **Next.js 15 Implementation:** Leverages the latest framework features
+- **Responsive & Elegant UI:** A clean, mobile-first design built with **Tailwind CSS**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework:** Next.js 15 (App Router)
+- **Database & Auth:** Supabase (PostgreSQL)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **API:** Pexels API
+- **Deployment:** Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔒 Security & Database (RLS)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project utilizes Supabase **Row Level Security (RLS)**. For demonstration purposes, the `likes` table currently has an open policy `(FOR ALL)`, allowing anonymous interaction without full authentication. In a production environment, this would be restricted to authenticated users using auth.uid() checks to prevent unauthorized data manipulation.
