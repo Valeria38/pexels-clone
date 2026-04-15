@@ -16,6 +16,8 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
 
+  console.log("response", response);
+
   const { data: like } = await supabase
     .from("likes")
     .select("*")
