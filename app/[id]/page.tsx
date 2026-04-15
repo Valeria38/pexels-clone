@@ -114,7 +114,6 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
               </div>
             </div>
           </div>
-          {/* Tags */}
           <div className="flex flex-wrap gap-2">
             <span className="text-gray-400 text-sm w-full mb-2">
               Popular tags
