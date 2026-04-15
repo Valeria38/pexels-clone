@@ -22,7 +22,9 @@ export async function getPhoto(id: string): Promise<Photo> {
     headers,
     method: "GET",
   });
-  return await response.json();
+  const res = await response.json();
+  console.log("res", res);
+  return res;
 }
 
 export async function searchPhotos(query: string): Promise<ImageResponse> {

@@ -1,6 +1,8 @@
-import { getPhotos, searchPhotos } from "@/lib/pexels";
+import { searchPhotos } from "@/lib/pexels";
 import InfinitePhotoList from "@/components/InfinitePhotoList";
 import SearchBar from "@/components/SearchBar";
+import Tags from "@/components/Tags";
+import { redirect } from "next/navigation";
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;
@@ -8,12 +10,15 @@ interface PageProps {
 
 export default async function Home({ searchParams }: PageProps) {
   const { query } = await searchParams;
-  const currentQuery = query || "nature";
-  const { photos } = await searchPhotos(currentQuery);
+  if (!query) {
+    redirect("/?query=nature");
+  }
+  const { photos } = await searchPhotos(query);
 
   return (
     <section className="w-full px-7.5">
-      <SearchBar query={currentQuery} />
+      <SearchBar initialQuery={query} />
+      <Tags />
       {photos && <InfinitePhotoList initialPhotos={photos} key={query} />}
     </section>
   );

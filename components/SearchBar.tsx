@@ -2,16 +2,24 @@
 import { Input } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
 interface ISearchBarProps {
-  query: string;
+  initialQuery: string;
 }
 
-export default function SearchBar({ query }: ISearchBarProps) {
+export default function SearchBar({ initialQuery }: ISearchBarProps) {
   const router = useRouter();
-  const [input, setInput] = useState(query);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
+  const [input, setInput] = useState(initialQuery);
+  const [prevQuery, setPrevQuery] = useState(query);
+
+  if (query !== prevQuery) {
+    setPrevQuery(query);
+    if (query) setInput(query);
+  }
 
   const handleSubmit = () => {
     router.push("/?query=" + input);
