@@ -29,7 +29,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   if (!response) return null;
   return (
     <div className="min-h-screen bg-white pt-10">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className=" mx-auto flex items-start justify-between px-4 flex-col md:flex-row gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-200">
             <UserIcon className="text-gray-400 size-10" />
