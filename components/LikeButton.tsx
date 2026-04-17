@@ -32,7 +32,7 @@ const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
     }
   };
   return (
-    <Button onClick={toggleLike} color="gray" className={`p-2.5`}>
+    <Button onClick={toggleLike} color="gray" className="md:px-3">
       <HeartIcon
         className={`size-6 ${
           liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"

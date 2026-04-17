@@ -16,7 +16,7 @@ export default async function Home({ searchParams }: PageProps) {
   const { photos } = await searchPhotos(query);
 
   return (
-    <section className="w-full px-7.5">
+    <section className="w-full px-3 md:px-7.5">
       <SearchBar initialQuery={query} />
       <Tags />
       {photos && <InfinitePhotoList initialPhotos={photos} key={query} />}

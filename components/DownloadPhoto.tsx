@@ -14,7 +14,7 @@ const DownloadPhoto = ({ imageUrl, filename }: IDownloadPhotoProps) => {
       onClick={() => handleDownload(`${imageUrl}`, filename)}
       color="emerald"
     >
-      <span className="hidden sm:inline">Download</span>
+      <span className="sm:inline">Download</span>
       <ArrowDownTrayIcon className="size-6" />
     </Button>
   );

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-100 px-4 py-0">
+    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-100 px-0 md:px-4 py-0">
       <Link href={"/"}>
         <Image
           src="/logo.svg"

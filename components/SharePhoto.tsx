@@ -62,19 +62,17 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
         />
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-3 md:p-4 text-center sm:p-0">
             <DialogPanel
               transition
-              className="relative bg-white text-black transform overflow-hidden rounded-3xl text-left shadow-2xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 sm:my-8 sm:w-full sm:max-w-md data-closed:sm:scale-95 border border-gray-100"
+              className="relative bg-white text-black transform overflow-hidden rounded-xl text-left shadow-2xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 sm:my-8 sm:w-full sm:max-w-md data-closed:sm:scale-95 border border-gray-100"
             >
               <XMarkIcon
-                width={22}
-                height={22}
-                className="absolute top-5 right-5 cursor-pointer text-gray-400 hover:text-gray-900 transition-colors"
+                className="absolute size-5  lg:size-7 top-2 right-2 md:top-3 md:right-3 cursor-pointer text-gray-400 hover:text-gray-900 transition-colors"
                 onClick={toggleModal}
               />
 
-              <div className="px-8 pt-10 pb-6 border-b border-gray-100">
+              <div className="px-4 pt-10 pb-6 border-b border-gray-100">
                 <DialogTitle
                   as="h3"
                   className="text-xl font-bold text-gray-950 text-center"
@@ -103,12 +101,12 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                 ))}
               </div>
 
-              <div className="mt-6 px-8 mb-10">
+              <div className="mt-6 px-4 mb-10">
                 <label className="text-gray-600 text-sm mb-3 block font-medium">
                   Add a link to this photo
                 </label>
 
-                <div className="flex items-center justify-between bg-gray-50 p-4 rounded-xl border border-gray-100 group">
+                <div className="w-full p-2 md:p-2.5 flex items-center justify-between bg-gray-50 rounded-xl border border-gray-100 group">
                   <span className="text-gray-950 truncate font-medium text-sm select-all">
                     {displayValue}
                   </span>
@@ -117,10 +115,10 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     onClick={() =>
                       copyLink(`${window.location.origin}${pathname}`)
                     }
-                    className="ml-3 p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all active:scale-95"
+                    className="ml-3 md:px-3 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all active:scale-95"
                     title="Copy link to clipboard"
                   >
-                    <Copy size={18} className="cursor-pointer" />
+                    <Copy className="cursor-pointer size-5 md:size-6" />
                   </Button>
                 </div>
               </div>

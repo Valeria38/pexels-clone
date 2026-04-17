@@ -46,7 +46,7 @@ const Button: FC<IButtonProps> = ({
     <button
       onClick={typeof onClick === "function" ? onClick : undefined}
       className={cn(
-        `h-12 p-2.5 px-4 rounded-lg transition-all active:scale-95 cursor-pointer flex items-center gap-2 font-bold shadow-sm`,
+        `p-2 md:p-3 md:px-5 text-sm md:text-base rounded-xl transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 font-bold shadow-sm`,
         colorVariants[color],
         className
       )}

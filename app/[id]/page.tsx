@@ -59,7 +59,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
       </div>
       <main className="max-w-7xl mx-auto py-6 px-4">
         <div
-          className="relative mx-auto bg-gray-50 rounded-lg overflow-hidden shadow-sm border border-gray-100"
+          className="relative mx-auto bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-gray-100"
           style={{
             maxWidth: ratio > 1 ? "1000px" : "600px",
             aspectRatio: `${ratio}`,
