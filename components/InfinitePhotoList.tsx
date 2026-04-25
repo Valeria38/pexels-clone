@@ -1,16 +1,19 @@
 "use client";
-import { getPhotos } from "@/lib/pexels";
+import { searchPhotos } from "@/lib/pexels";
 import { Photo } from "@/lib/types";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MasonryGrid from "./MasonryGrid";
 import Loader from "./Loader";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface IInfinitePhotoListProps {
   initialPhotos: Photo[];
 }
 
 const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
+
   const params = useParams();
   const [photos, setPhotos] = useState(initialPhotos);
   const [page, setPage] = useState(2);
@@ -19,7 +22,25 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
   const observerTarget = useRef(null);
   const isModalOpen = !!params.id;
 
-  console.log("photos", photos);
+  const loadMorePhotos = useCallback(async () => {
+    if (query) {
+      setLoading(true);
+      const newPhotos = await searchPhotos(query, page);
+
+      if (newPhotos.photos.length === 0) {
+        setHasMore(false);
+      } else {
+        setPhotos((prev) => {
+          const uniqueNewPhotos = newPhotos.photos.filter(
+            (newPhoto) => !prev.some((existing) => existing.id === newPhoto.id)
+          );
+          return [...prev, ...uniqueNewPhotos];
+        });
+        setPage((prev) => prev + 1);
+      }
+      setLoading(false);
+    }
+  }, [page, query]);
 
   useEffect(() => {
     if (isModalOpen) return;
@@ -45,25 +66,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
     }
 
     return () => observer.disconnect();
-  }, [hasMore, isModalOpen, loading]);
-
-  const loadMorePhotos = useCallback(async () => {
-    setLoading(true);
-    const newPhotos = await getPhotos(page);
-
-    if (newPhotos.photos.length === 0) {
-      setHasMore(false);
-    } else {
-      setPhotos((prev) => {
-        const uniqueNewPhotos = newPhotos.photos.filter(
-          (newPhoto) => !prev.some((existing) => existing.id === newPhoto.id)
-        );
-        return [...prev, ...uniqueNewPhotos];
-      });
-      setPage((prev) => prev + 1);
-    }
-    setLoading(false);
-  }, [page, hasMore]);
+  }, [hasMore, isModalOpen, loading, loadMorePhotos]);
 
   return (
     <div className="min-h-screen">

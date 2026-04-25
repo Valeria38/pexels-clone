@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: PageProps) {
   if (!query) {
     redirect("/?query=nature");
   }
-  const { photos } = await searchPhotos(query);
+  const { photos } = await searchPhotos(query, 1);
 
   return (
     <section className="w-full px-3 md:px-7.5">

@@ -27,9 +27,12 @@ export async function getPhoto(id: string): Promise<Photo> {
   return res;
 }
 
-export async function searchPhotos(query: string): Promise<ImageResponse> {
+export async function searchPhotos(
+  query: string,
+  page: number = 1
+): Promise<ImageResponse> {
   const response = await fetch(
-    `https://api.pexels.com/v1/search?query=${query}&per_page=40`,
+    `https://api.pexels.com/v1/search?query=${query}&per_page=40&page=${page}`,
     {
       headers,
       method: "GET",
