@@ -1,4 +1,4 @@
-import { getPhoto } from "@/lib/pexels";
+import { getPhoto, searchPhotos } from "@/lib/pexels";
 import Image from "next/image";
 import SharePhoto from "@/components/SharePhoto";
 import { UserIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
@@ -6,6 +6,13 @@ import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
+
+export async function generateStaticParams() {
+  const { photos } = await searchPhotos("nature", 1);
+  return photos.slice(0, 4).map(({ id }) => ({
+    id: id.toString(),
+  }));
+}
 
 interface PhotoDetailsProps {
   params: Promise<{ id: string }>;
@@ -15,8 +22,6 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   const response = await getPhoto(id);
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
-
-  console.log("response", response);
 
   const { data: like } = await supabase
     .from("likes")
