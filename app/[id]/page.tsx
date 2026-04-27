@@ -7,13 +7,6 @@ import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
 
-export async function generateStaticParams() {
-  const { photos } = await searchPhotos("nature", 1);
-  return photos.slice(0, 4).map(({ id }) => ({
-    id: id.toString(),
-  }));
-}
-
 interface PhotoDetailsProps {
   params: Promise<{ id: string }>;
 }
