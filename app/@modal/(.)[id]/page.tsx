@@ -23,6 +23,7 @@ const DefaultModalPage = async ({ params }: IDefaultModalPageProps) => {
 
   return (
     <DetailsModal
+      previewSrc={src.large}
       src={src.original}
       alt={alt}
       ratio={ratio}

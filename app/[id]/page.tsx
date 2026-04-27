@@ -1,4 +1,4 @@
-import { getPhoto, searchPhotos } from "@/lib/pexels";
+import { getPhoto } from "@/lib/pexels";
 import Image from "next/image";
 import SharePhoto from "@/components/SharePhoto";
 import { UserIcon, InformationCircleIcon } from "@heroicons/react/24/outline";

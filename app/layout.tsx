@@ -34,6 +34,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="dns-prefetch" href="https://images.pexels.com" />
+        <link
+          rel="preconnect"
+          href="https://images.pexels.com"
+          crossOrigin=""
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Header />
         {children}

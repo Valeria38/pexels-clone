@@ -9,6 +9,7 @@ import LikeButton from "./LikeButton";
 import { useState } from "react";
 
 interface IDetailsModalProps {
+  previewSrc: string;
   src: string;
   alt: string;
   ratio: number;
@@ -19,6 +20,7 @@ interface IDetailsModalProps {
   height: number;
 }
 const DetailsModal = ({
+  previewSrc,
   src,
   alt,
   photographer,
@@ -53,27 +55,29 @@ const DetailsModal = ({
               style={{
                 width: ratio > 1 ? "600px" : "380px",
                 maxWidth: "100%",
+                aspectRatio: `${ratio}`,
               }}
-              className={`rounded-xl w-full flex justify-center bg-gray-200 ${
-                !loading ? "animate-pulse" : ""
-              }`}
+              className="relative bg-gray-50"
             >
               <Image
-                onLoad={() => setLoading(true)}
+                src={previewSrc}
+                alt={alt}
+                fill
+                className="object-cover blur-md scale-100 opacity-40"
+              />
+              <Image
+                unoptimized
+                priority
                 src={src}
                 alt={alt}
-                width={640}
-                height={640}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  aspectRatio: `${ratio}`,
-                }}
-                className={`rounded-xl  object-contain duration-700 ease-in-out ${
+                fill
+                onLoad={() => setLoading(true)}
+                className={`relative z-10 object-contain duration-500 ${
                   loading ? "opacity-100" : "opacity-0"
                 }`}
               />
             </div>
+
             <div className="flex flex-col md:flex-row gap-2 md:gap-4 w-full ">
               <SharePhoto url={src} photographer={photographer} />
               <div className="flex gap-2 justify-center">

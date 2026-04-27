@@ -11,6 +11,7 @@ interface ILikeButtonProps {
 
 const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
   const [liked, setLiked] = useState(isLiked);
+
   const toggleLike = async (e: React.MouseEvent) => {
     const guestId = localStorage.getItem("guest_id") || crypto.randomUUID();
     localStorage.setItem("guest_id", guestId);
