@@ -10,8 +10,12 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { copyLink } from "@/lib/utils";
-import Copy from "@/assets/copy.svg";
 import Button from "./Button";
+import copyUrl from "@/assets/copy.svg";
+import threadsUrl from "@/assets/threads.svg";
+import linkedinUrl from "@/assets/linkedin.svg";
+import fbUrl from "@/assets/facebook.svg";
+import xUrl from "@/assets/x.svg";
 
 interface SharePhotoProps {
   url: string;
@@ -21,22 +25,22 @@ interface SharePhotoProps {
 const iconsData = (url: string) => [
   {
     url: `https://www.threads.net/intent/post?text=${encodeURIComponent(url)}`,
-    src: `/threads.svg`,
+    src: threadsUrl,
     alt: "Threads icon",
   },
   {
     url: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-    src: `/linkedin.svg`,
+    src: linkedinUrl,
     alt: "LinkedIn icon",
   },
   {
     url: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-    src: `/facebook.svg`,
+    src: fbUrl,
     alt: "Facebook icon",
   },
   {
     url: `https://x.com/intent/post?url=${url}`,
-    src: `/x.svg`,
+    src: xUrl,
     alt: "X icon",
   },
 ];
@@ -93,8 +97,7 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     <Image
                       src={src}
                       alt={alt}
-                      width={32}
-                      height={32}
+                      sizes="24px"
                       className="group-hover:scale-105 transition-transform"
                     />
                   </a>
@@ -115,10 +118,15 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     onClick={() =>
                       copyLink(`${window.location.origin}${pathname}`)
                     }
-                    className="ml-3 md:px-3 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all active:scale-95"
+                    className="ml-3 md:px-3 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all active:scale-95"
                     title="Copy link to clipboard"
                   >
-                    <Copy className="cursor-pointer size-5 md:size-6" />
+                    <Image
+                      src={copyUrl}
+                      className="cursor-pointer size-5 md:size-6"
+                      alt="Copy icon"
+                      sizes="20"
+                    />
                   </Button>
                 </div>
               </div>

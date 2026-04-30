@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
 interface ITagProps {
   value: string;
-  imgSrc: string;
+  imgSrc: StaticImageData;
 }
 
 const Tag: FC<ITagProps> = ({ value, imgSrc }) => {
@@ -12,7 +12,7 @@ const Tag: FC<ITagProps> = ({ value, imgSrc }) => {
     <Link key={value} href={`?query=${value}`}>
       <div className="p-1 rounded-full flex items-center gap-2 cursor-pointer">
         <div
-          className="relative w-8 h-8 overflow-hidden rounded-full"
+          className="relative size-8 overflow-hidden rounded-full"
           key={value}
         >
           <Image
