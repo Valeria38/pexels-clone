@@ -6,6 +6,7 @@ import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import { cacheLife } from "next/cache";
 
 interface PhotoDetailsProps {
   params: Promise<{ id: string }>;

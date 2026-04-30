@@ -1,4 +1,5 @@
 "use server";
+import { cacheLife } from "next/cache";
 import { ImageResponse, Photo } from "./types";
 
 const headers = {
@@ -18,12 +19,14 @@ export async function getPhotos(page: number = 1): Promise<ImageResponse> {
 }
 
 export async function getPhoto(id: string): Promise<Photo> {
+  "use cache";
+  cacheLife("hours");
   const response = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
     headers,
     method: "GET",
   });
   const res = await response.json();
-  console.log("res", res);
+
   return res;
 }
 
@@ -31,6 +34,8 @@ export async function searchPhotos(
   query: string,
   page: number = 1
 ): Promise<ImageResponse> {
+  "use cache";
+  cacheLife("hours");
   const response = await fetch(
     `https://api.pexels.com/v1/search?query=${query}&per_page=40&page=${page}`,
     {
