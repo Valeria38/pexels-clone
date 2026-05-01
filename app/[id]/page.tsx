@@ -1,12 +1,12 @@
 import { getPhoto } from "@/lib/pexels";
 import Image from "next/image";
 import SharePhoto from "@/components/SharePhoto";
-import { UserIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
+import UserIcon from "@heroicons/react/24/outline/UserIcon";
+import InformationCircleIcon from "@heroicons/react/24/outline/InformationCircleIcon";
 import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
-import { cacheLife } from "next/cache";
 
 interface PhotoDetailsProps {
   params: Promise<{ id: string }>;

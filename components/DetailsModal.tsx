@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import Image from "next/image";
 import SharePhoto from "./SharePhoto";
 import { useRouter } from "next/navigation";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import DownloadPhoto from "./DownloadPhoto";
 import LikeButton from "./LikeButton";
 import { useState } from "react";

@@ -1,8 +1,8 @@
 "use client";
-import { supabase } from "@/lib/supabase";
-import { HeartIcon } from "@heroicons/react/24/solid";
+import HeartIcon from "@heroicons/react/24/solid/HeartIcon";
 import React, { useState } from "react";
 import Button from "./Button";
+import { toggleLikeAction } from "@/lib/actions";
 
 interface ILikeButtonProps {
   photoId: number;
@@ -12,26 +12,20 @@ interface ILikeButtonProps {
 const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
   const [liked, setLiked] = useState(isLiked);
 
-  const toggleLike = async (e: React.MouseEvent) => {
+  const toggleLike = async () => {
     const guestId = localStorage.getItem("guest_id") || crypto.randomUUID();
     localStorage.setItem("guest_id", guestId);
-    document.cookie = `guest_id=${guestId}; path=/; max-age=31536000`;
-
     const nextState = !liked;
     setLiked(nextState);
 
-    if (nextState) {
-      await supabase
-        .from("likes")
-        .insert({ photo_id: photoId, user_id: guestId });
-    } else {
-      await supabase
-        .from("likes")
-        .delete()
-        .eq("photo_id", photoId)
-        .eq("user_id", guestId);
+    try {
+      await toggleLikeAction(photoId, guestId, nextState);
+    } catch (error) {
+      setLiked(!nextState);
+      console.error("Failed to toggle like", error);
     }
   };
+
   return (
     <Button onClick={toggleLike} color="gray" className="md:px-3">
       <HeartIcon

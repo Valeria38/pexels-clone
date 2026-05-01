@@ -1,5 +1,6 @@
 "use client";
-import { ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import ShareIcon from "@heroicons/react/24/outline/ShareIcon";
+import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useState } from "react";
 import {
   Dialog,

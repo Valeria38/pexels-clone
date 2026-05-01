@@ -70,7 +70,7 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
         <div key={id}>
           <Link href={`/${id}`} scroll={false} prefetch={false}>
             <PhotoImage
-              priority={idx < 10}
+              priority={idx <= 4}
               src={large}
               width={width}
               height={height}
