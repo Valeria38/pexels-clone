@@ -33,13 +33,13 @@ const DetailsModal = ({
   const { back, push } = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const handleClose = () => {
+    back();
+  };
+
   const ratio = width / height;
   return (
-    <Dialog
-      open={true}
-      onClose={() => push("/", { scroll: false })}
-      className="relative z-50"
-    >
+    <Dialog open={true} onClose={handleClose} className="relative z-50">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-900/60 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200"
@@ -49,7 +49,7 @@ const DetailsModal = ({
         <div className="relative flex min-h-full items-center justify-center p-3 border-4 md:p-5 text-center">
           <XMarkIcon
             className="absolute size-5  lg:size-7 top-1.5 right-1.5 md:top-3 md:right-3 cursor-pointer text-white transition-colors z-20"
-            onClick={back}
+            onClick={handleClose}
           />
           <DialogPanel
             transition
