@@ -30,27 +30,20 @@ const DetailsModal = ({
   height,
 }: IDetailsModalProps) => {
   const format = src.split(".")[src.split(".").length - 1];
-  const { back, push } = useRouter();
+  const { back } = useRouter();
   const [loading, setLoading] = useState(false);
-
-  const handleClose = () => {
-    back();
-  };
 
   const ratio = width / height;
   return (
-    <Dialog open={true} onClose={handleClose} className="relative z-50">
+    <Dialog open={true} onClose={back} className="relative z-50">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-900/60 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="relative flex min-h-full items-center justify-center p-3 border-4 md:p-5 text-center">
-          <XMarkIcon
-            className="absolute size-5  lg:size-7 top-1.5 right-1.5 md:top-3 md:right-3 cursor-pointer text-white transition-colors z-20"
-            onClick={handleClose}
-          />
+        <div className="relative flex min-h-full items-center justify-center py-8 p-3  md:p-5 text-center">
+          <XMarkIcon className="absolute size-5  lg:size-7 top-1.5 right-1.5 md:top-3 md:right-3 cursor-pointer text-white transition-colors z-20" />
           <DialogPanel
             transition
             className="relative bg-white p-3 md:p-9 text-black overflow-hidden rounded-xl shadow-2xl transition-all sm:my-8 w-auto max-w-[98vw] flex flex-col gap-4 items-center justify-center border border-gray-100"
