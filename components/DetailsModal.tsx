@@ -8,11 +8,10 @@ import DownloadPhoto from "./DownloadPhoto";
 import LikeButton from "./LikeButton";
 import { useState } from "react";
 
-interface IDetailsModalProps {
+export interface IDetailsModalProps {
   previewSrc: string;
   src: string;
   alt: string;
-  ratio: number;
   photographer: string;
   photoId: number;
   isLiked: boolean;
@@ -43,7 +42,10 @@ const DetailsModal = ({
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="relative flex min-h-full items-center justify-center py-8 p-3  md:p-5 text-center">
-          <XMarkIcon className="absolute size-5  lg:size-7 top-1.5 right-1.5 md:top-3 md:right-3 cursor-pointer text-white transition-colors z-20" />
+          <XMarkIcon
+            aria-label="close"
+            className="absolute size-5 lg:size-7 top-1.5 right-1.5 md:top-3 md:right-3 cursor-pointer text-white transition-colors z-20"
+          />
           <DialogPanel
             transition
             className="relative bg-white p-3 md:p-9 text-black overflow-hidden rounded-xl shadow-2xl transition-all sm:my-8 w-auto max-w-[98vw] flex flex-col gap-4 items-center justify-center border border-gray-100"
@@ -55,6 +57,7 @@ const DetailsModal = ({
                 aspectRatio: `${ratio}`,
               }}
               className="relative bg-gray-50"
+              data-testid="details-modal-image-container"
             >
               <Image
                 src={previewSrc}

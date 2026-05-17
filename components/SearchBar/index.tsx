@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@headlessui/react";
 import MagnifyingGlassIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
-import Button from "./Button";
+import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
@@ -29,7 +29,7 @@ export default function SearchBar({ initialQuery }: ISearchBarProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-label="search-form">
       <div className=" w-full max-w-md mx-auto py-10 ">
         <div className="flex gap-4 flex-col md:flex-row w-full">
           <div className="relative grow">

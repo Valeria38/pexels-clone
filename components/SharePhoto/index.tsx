@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { copyLink } from "@/lib/utils";
-import Button from "./Button";
+import Button from "../Button";
 import copyUrl from "@/assets/copy.svg";
 import threadsUrl from "@/assets/threads.svg";
 import linkedinUrl from "@/assets/linkedin.svg";
@@ -55,7 +55,7 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
   const displayValue = `Photo by ${photographer}`;
   return (
     <>
-      <Button onClick={toggleModal}>
+      <Button onClick={toggleModal} aria-label="share-photo">
         Share
         <ShareIcon className="size-6" />
       </Button>
@@ -121,6 +121,7 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
                     }
                     className="ml-3 md:px-3 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all active:scale-95"
                     title="Copy link to clipboard"
+                    aria-label="copy-url-button"
                   >
                     <Image
                       src={copyUrl}

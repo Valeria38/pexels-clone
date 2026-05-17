@@ -3,7 +3,6 @@ import { toast } from "sonner";
 export const copyLink = async (url: string) => {
   try {
     await navigator.clipboard.writeText(url);
-
     toast.success("Copied!");
   } catch (err) {
     toast.error(`Unable to copy: ${err}`);

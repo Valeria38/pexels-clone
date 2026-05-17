@@ -1,4 +1,4 @@
-import Tag from "./Tag";
+import Tag from "../Tag";
 import wallpapaerSrc from "@/assets/wallpaper.avif";
 import bgSrc from "@/assets/background.avif";
 import flowersSrc from "@/assets/flowers.avif";
@@ -10,7 +10,7 @@ import beachSrc from "@/assets/beach.avif";
 import mountainSrc from "@/assets/mountain.avif";
 import textureSrc from "@/assets/texture.avif";
 
-const popularTags = [
+export const popularTags = [
   { value: "wallpaper", img: wallpapaerSrc },
   { value: "background", img: bgSrc },
   { value: "flowers", img: flowersSrc },

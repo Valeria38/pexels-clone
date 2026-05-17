@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
 import ScrollReset from "@/components/ScrollReset";
 
-interface PhotoDetailsProps {
+export interface PhotoDetailsProps {
   params: Promise<{ id: string }>;
 }
 const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
@@ -24,8 +24,8 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
     .eq("photo_id", id)
     .eq("user_id", guestId)
     .single();
-
   const ratio = response.width / response.height;
+
   if (!response) return null;
   return (
     <>
@@ -97,7 +97,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
               <div className="flex justify-between border-b border-gray-50 pb-2">
                 <span className="text-gray-400">Dimensions</span>
                 <span className="font-medium text-gray-900">
-                  {response.width} × {response.height}
+                  {response.width} x {response.height}
                 </span>
               </div>
               <div className="flex justify-between border-b border-gray-50 pb-2">

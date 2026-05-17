@@ -2,7 +2,7 @@
 import { searchPhotos } from "@/lib/pexels";
 import { Photo } from "@/lib/types";
 import { useCallback, useEffect, useRef, useState } from "react";
-import MasonryGrid from "./MasonryGrid";
+import MasonryGrid from "@/components/MasonryGrid";
 import Loader from "./Loader";
 import { useParams, useSearchParams } from "next/navigation";
 
@@ -27,13 +27,15 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
       setLoading(true);
       const newPhotos = await searchPhotos(query, page);
 
-      if (newPhotos.photos.length === 0) {
+      if (newPhotos.photos?.length === 0) {
         setHasMore(false);
       } else {
         setPhotos((prev) => {
-          const uniqueNewPhotos = newPhotos.photos.filter(
-            (newPhoto) => !prev.some((existing) => existing.id === newPhoto.id)
-          );
+          const uniqueNewPhotos =
+            newPhotos.photos?.filter(
+              (newPhoto) =>
+                !prev.some((existing) => existing.id === newPhoto.id)
+            ) ?? [];
           return [...prev, ...uniqueNewPhotos];
         });
         setPage((prev) => prev + 1);
@@ -74,7 +76,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
 
       {photos.length > 0 && (
         <div ref={observerTarget} className="h-10 w-full">
-          {loading && <Loader />}
+          {loading && <Loader data-testid="infinite-photo-list-loader" />}
         </div>
       )}
     </div>

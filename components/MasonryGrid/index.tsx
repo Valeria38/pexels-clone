@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 interface PhotosProps {
   photos: Photo[];
 }
 
-interface IPhotoImageProps {
+export interface IPhotoImageProps {
   alt: string;
   src: string;
   height: number;
@@ -32,6 +32,7 @@ export const PhotoImage = ({
         !loading ? "animate-pulse" : ""
       }`}
       style={{ aspectRatio: `${width / height}` }}
+      role="listitem"
     >
       <Image
         alt={alt}
@@ -65,6 +66,8 @@ const MasonryGrid = ({ photos }: PhotosProps) => {
       }}
       className="masonry-grid"
       columnClassName="masonry-grid_column"
+      role="list"
+      aria-label="Photo gallery"
     >
       {photos.map(({ alt, id, src: { large }, width, height }, idx) => (
         <div key={id}>

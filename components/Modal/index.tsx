@@ -1,16 +1,15 @@
 import { getPhoto } from "@/lib/pexels";
 import { supabase } from "@/lib/supabase";
 import { cookies } from "next/headers";
-import DetailsModal from "./DetailsModal";
+import DetailsModal from "../DetailsModal";
 
-interface IModalProps {
+export interface IModalProps {
   params: Promise<{ id: string }>;
 }
 
 const Modal = async ({ params }: IModalProps) => {
   const { id } = await params;
   const { src, alt, width, height, photographer } = await getPhoto(id);
-  const ratio = width / height;
 
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
@@ -27,7 +26,6 @@ const Modal = async ({ params }: IModalProps) => {
       previewSrc={src.large}
       src={src.original}
       alt={alt}
-      ratio={ratio}
       photographer={photographer}
       photoId={+id}
       isLiked={!!like}
