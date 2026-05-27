@@ -75,7 +75,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
       <MasonryGrid photos={photos} />
 
       {photos.length > 0 && (
-        <div ref={observerTarget} className="h-10 w-full">
+        <div ref={observerTarget} className="h-10 w-full ">
           {loading && <Loader data-testid="infinite-photo-list-loader" />}
         </div>
       )}

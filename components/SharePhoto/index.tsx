@@ -60,12 +60,11 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
         <ShareIcon className="size-6" />
       </Button>
 
-      <Dialog open={opened} onClose={setOpened} className="relative z-50">
+      <Dialog open={opened} onClose={toggleModal} className="relative z-50">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-900/60 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200"
         />
-
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-3 md:p-4 text-center sm:p-0">
             <DialogPanel

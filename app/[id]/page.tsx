@@ -69,6 +69,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
               maxWidth: ratio > 1 ? "1000px" : "600px",
               aspectRatio: `${ratio}`,
             }}
+            data-testid="details-photo"
           >
             <Image
               src={response.src.original}
