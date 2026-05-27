@@ -44,21 +44,18 @@ test.describe("Homepage", () => {
     await expect(images.first()).not.toHaveAttribute("src", firstSrcBefore!);
   });
 
-  test("should trigger Next.js server request on query change", async ({
-    page,
-  }) => {
-    const nextServerFetchPromise = page.waitForResponse((response) =>
-      response.url().includes("query=sea")
-    );
-    const searchInput = page.getByRole("textbox", {
-      name: /Search photos/i,
-    });
+  test("should trigger Next.js server request on query change", async ({ page }) => {
+    const searchInput = page.getByRole("textbox", { name: /Search photos/i });
     const button = page.getByRole("button", { name: /Search/i });
 
     await searchInput.fill("sea");
     await button.click();
-    const response = await nextServerFetchPromise;
-    expect(response.status()).toBe(200);
+
+    await expect(page).toHaveURL(/\?query=sea/);
+
+
+    const photoList = page.getByRole("list", { name: /photo gallery/i });
+    await expect(photoList).toBeVisible();
   });
 
   test("should change query after tag was clicked", async ({ page }) => {

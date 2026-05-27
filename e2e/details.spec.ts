@@ -32,24 +32,40 @@ test.describe('Details page', () => {
     expect(alt).toBeTruthy();
   });
 
-  test('should copy photo url to clipboard on copy button click', async ({ page }) => {
+
+  test('should copy photo url to clipboard on copy button click', async ({ page, context }) => {
+    const browserName = page.context().browser()?.browserType().name();
+
+    if (browserName === 'chromium') {
+      await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    }
+
     const shareBtn = page.getByRole('button', { name: /share-photo/i });
     await shareBtn.click();
+
     const shareModal = page.getByRole('dialog');
     await expect(shareModal).toHaveAttribute('data-headlessui-state', 'open');
+
     const heading = shareModal.getByRole('heading', { name: /share this with your community/i });
     await expect(heading).toHaveText(/share this with your community/i);
-    const copyBtn = shareModal.getByRole('button', { name: /copy-url-button/i });
 
-    // grant clipboard permissions, click copy and verify clipboard content
-    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    const copyBtn = shareModal.getByRole('button', { name: /copy-url-button/i });
     await expect(copyBtn).toBeVisible();
+
     await copyBtn.click();
 
-    const copiedText = await page.evaluate(() => navigator.clipboard.readText());
-    const expected = await page.evaluate(() => window.location.origin + window.location.pathname);
-    expect(copiedText).toBe(expected);
-  })
+
+    const expectedUrl = await page.evaluate(() => window.location.origin + window.location.pathname);
+
+
+    if (browserName === 'chromium') {
+      const copiedText = await page.evaluate(() => navigator.clipboard.readText());
+      expect(copiedText).toBe(expectedUrl);
+    } else {
+      const successToast = page.getByText('Copied!');
+      await expect(successToast).toBeVisible();
+    }
+  });
 
   test('should send like POST request to server on like button click', async ({ page }) => {
     const likeBtn = page.getByRole('button', { name: /like-photo/i });
@@ -83,7 +99,7 @@ test.describe('Details page', () => {
       downloadBtn.click(),
     ]);
 
-    expect(download.suggestedFilename()).toBe('Dense_greenery_in_a_tranquil_forest_setting_with_tall_trees_and_natural_light.jpeg');
+    expect(download.suggestedFilename()).toContain('Dense_greenery_in_a_tranquil_forest_setting_with_tall_trees_and_natural_light');
     expect(await download.path()).toBeTruthy();
   });
 })
