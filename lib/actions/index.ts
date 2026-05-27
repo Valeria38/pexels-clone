@@ -1,17 +1,14 @@
 "use server";
-
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { revalidatePath } from "next/cache";
+import { createClient } from "../supabase/server";
 
 export async function toggleLikeAction(
   photoId: number,
-  guestId: string,
-  shouldLike: boolean
+  shouldLike: boolean,
+  guestId?: string,
+
 ) {
+  const supabase = await createClient();
   if (shouldLike) {
     const { error } = await supabase
       .from("likes")
@@ -25,4 +22,6 @@ export async function toggleLikeAction(
       .eq("user_id", guestId);
     if (error) throw new Error(error.message);
   }
+
+  revalidatePath(`/${photoId}`);
 }

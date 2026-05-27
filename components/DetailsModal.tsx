@@ -17,6 +17,7 @@ export interface IDetailsModalProps {
   isLiked: boolean;
   width: number;
   height: number;
+  guestId: string;
 }
 const DetailsModal = ({
   previewSrc,
@@ -27,6 +28,7 @@ const DetailsModal = ({
   isLiked,
   width,
   height,
+  guestId
 }: IDetailsModalProps) => {
   const format = src.split(".")[src.split(".").length - 1];
   const { back } = useRouter();
@@ -72,9 +74,8 @@ const DetailsModal = ({
                 alt={alt}
                 fill
                 onLoad={() => setLoading(true)}
-                className={`relative z-10 object-contain duration-500 ${
-                  loading ? "opacity-100" : "opacity-0"
-                }`}
+                className={`relative z-10 object-contain duration-500 ${loading ? "opacity-100" : "opacity-0"
+                  }`}
               />
             </div>
 
@@ -85,7 +86,7 @@ const DetailsModal = ({
                   imageUrl={src}
                   filename={`${alt.split(" ").join("_")}.${format}`}
                 />
-                <LikeButton photoId={photoId} isLiked={isLiked} />
+                <LikeButton photoId={photoId} isLiked={isLiked} guestId={guestId} />
               </div>
             </div>
           </DialogPanel>

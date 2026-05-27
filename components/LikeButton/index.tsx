@@ -7,19 +7,18 @@ import { toggleLikeAction } from "@/lib/actions";
 interface ILikeButtonProps {
   photoId: number;
   isLiked: boolean;
+  guestId?: string;
 }
 
-const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
+const LikeButton = ({ photoId, isLiked, guestId }: ILikeButtonProps) => {
   const [liked, setLiked] = useState(isLiked);
 
   const toggleLike = async () => {
-    const guestId = localStorage.getItem("guest_id") || crypto.randomUUID();
-    localStorage.setItem("guest_id", guestId);
     const nextState = !liked;
     setLiked(nextState);
 
     try {
-      await toggleLikeAction(photoId, guestId, nextState);
+      await toggleLikeAction(photoId, nextState, guestId);
     } catch (error) {
       setLiked(!nextState);
       console.error("Failed to toggle like", error);
@@ -35,9 +34,8 @@ const LikeButton = ({ photoId, isLiked }: ILikeButtonProps) => {
     >
       <HeartIcon
         role="img"
-        className={`size-6 ${
-          liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"
-        }`}
+        className={`size-6 ${liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"
+          }`}
       />
     </Button>
   );

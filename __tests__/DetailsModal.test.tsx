@@ -1,6 +1,6 @@
 import { screen, render } from "@testing-library/react";
 import DetailsModal from "@/components/DetailsModal";
-import { mockPhotoDetails } from "@/__mocks__/pexelsData";
+
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -25,6 +25,7 @@ const modalProps = {
   isLiked: false,
   width: imgWidth,
   height: imgHeight,
+  guestId: 'test-guest-id'
 };
 
 const setup = () => {

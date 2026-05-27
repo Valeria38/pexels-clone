@@ -1,5 +1,5 @@
 import { getPhoto } from "@/lib/pexels";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import DetailsModal from "../DetailsModal";
 
@@ -14,12 +14,13 @@ const Modal = async ({ params }: IModalProps) => {
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
 
+  const supabase = await createClient();
   const { data: like } = await supabase
     .from("likes")
     .select("*")
     .eq("photo_id", id)
     .eq("user_id", guestId)
-    .single();
+    .maybeSingle();
 
   return (
     <DetailsModal
@@ -31,6 +32,7 @@ const Modal = async ({ params }: IModalProps) => {
       isLiked={!!like}
       width={width}
       height={height}
+      guestId={guestId}
     />
   );
 };

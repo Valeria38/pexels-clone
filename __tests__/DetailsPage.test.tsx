@@ -9,6 +9,16 @@ jest.mock("@/lib/pexels", () => ({
   }),
 }));
 
+jest.mock("@/lib/supabase/server", () => ({
+  createClient: jest.fn().mockResolvedValue({
+    from: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    eq: jest.fn().mockReturnThis(),
+    maybeSingle: jest.fn().mockResolvedValue({ data: null, error: null }),
+    single: jest.fn().mockResolvedValue({ data: null, error: null })
+  })
+}));
+
 const mockGuestId = "test_guest_id";
 jest.mock("next/headers", () => ({
   cookies: jest.fn(() => ({
@@ -16,6 +26,10 @@ jest.mock("next/headers", () => ({
       if (name === "guest_id") return { value: mockGuestId };
       return undefined;
     }),
+    getAll: () => [
+      { name: 'guest_id', value: mockGuestId }
+    ],
+    set: () => jest.fn(),
   })),
 }));
 

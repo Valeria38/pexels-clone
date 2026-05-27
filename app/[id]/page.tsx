@@ -6,7 +6,7 @@ import InformationCircleIcon from "@heroicons/react/24/outline/InformationCircle
 import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
 import { cookies } from "next/headers";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import ScrollReset from "@/components/ScrollReset";
 
 export interface PhotoDetailsProps {
@@ -17,13 +17,14 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
   const response = await getPhoto(id);
   const cookieStore = await cookies();
   const guestId = cookieStore.get("guest_id")?.value;
+  const supabase = await createClient();
 
   const { data: like } = await supabase
     .from("likes")
     .select("*")
     .eq("photo_id", id)
     .eq("user_id", guestId)
-    .single();
+    .maybeSingle();
   const ratio = response.width / response.height;
 
   if (!response) return null;
@@ -51,7 +52,7 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <LikeButton photoId={response.id} isLiked={!!like} />
+            <LikeButton photoId={response.id} isLiked={!!like} guestId={guestId} />
             <SharePhoto
               url={response.url}
               photographer={response.photographer}

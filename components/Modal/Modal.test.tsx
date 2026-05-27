@@ -10,15 +10,26 @@ jest.mock("@/lib/pexels", () => ({
   }),
 }));
 
+const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
   useParams: jest.fn().mockReturnValue({ id: 5 }),
   useRouter: () => ({
-    push: global.mockPush,
+    push: mockPush,
     replace: jest.fn(),
     prefetch: jest.fn(),
     back: jest.fn(),
   }),
   usePathname: () => "/",
+}));
+
+jest.mock("@/lib/supabase/server", () => ({
+  createClient: jest.fn().mockResolvedValue({
+    from: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    eq: jest.fn().mockReturnThis(),
+    maybeSingle: jest.fn().mockResolvedValue({ data: null, error: null }),
+    single: jest.fn().mockResolvedValue({ data: null, error: null })
+  })
 }));
 
 jest.mock("next/headers", () => ({
@@ -27,6 +38,10 @@ jest.mock("next/headers", () => ({
       if (name === "guest_id") return { value: mockGuestId };
       return undefined;
     }),
+    getAll: () => [
+      { name: 'guest_id', value: mockGuestId }
+    ],
+    set: () => jest.fn(),
   })),
 }));
 
