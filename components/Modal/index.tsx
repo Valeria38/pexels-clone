@@ -18,7 +18,7 @@ const Modal = async ({ params }: IModalProps) => {
   const { data: like } = await supabase
     .from("likes")
     .select("*")
-    .eq("photo_id", id)
+    .eq("photo_id", Number(id))
     .eq("user_id", guestId)
     .maybeSingle();
 
