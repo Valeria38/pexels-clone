@@ -17,7 +17,7 @@ export interface IDetailsModalProps {
   isLiked: boolean;
   width: number;
   height: number;
-  guestId: string;
+  guestId?: string;
 }
 const DetailsModal = ({
   previewSrc,
