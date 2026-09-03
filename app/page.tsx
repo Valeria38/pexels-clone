@@ -1,8 +1,9 @@
-import { searchPhotos } from "@/lib/pexels";
+import { redirect } from "next/navigation";
+
 import InfinitePhotoList from "@/components/InfinitePhotoList";
 import SearchBar from "@/components/SearchBar";
 import Tags from "@/components/Tags";
-import { redirect } from "next/navigation";
+import { searchPhotos } from "@/lib/pexels";
 
 export interface HomePageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;

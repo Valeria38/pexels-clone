@@ -1,26 +1,39 @@
-const { TextEncoder, TextDecoder } = require("node:util");
-const { ReadableStream } = require("node:stream/web");
-const { MessagePort } = require("node:worker_threads");
+import { ReadableStream } from "node:stream/web";
+import { TextDecoder, TextEncoder } from "node:util";
+import { MessagePort } from "node:worker_threads";
 
-if (!global.TextEncoder) global.TextEncoder = TextEncoder;
-if (!global.TextDecoder) global.TextDecoder = TextDecoder;
-if (!global.ReadableStream) global.ReadableStream = ReadableStream;
-if (!global.MessagePort) global.MessagePort = MessagePort;
+export interface TestEnvironmentGlobal {
+  TextEncoder: typeof TextEncoder;
+  TextDecoder: typeof TextDecoder;
+  ReadableStream: typeof ReadableStream;
+  MessagePort: typeof MessagePort;
+  IntersectionObserver: unknown;
+  simulateIntersection: (isIntersecting: boolean) => void;
+  crypto: {
+    randomUUID: () => string;
+    [key: string]: unknown;
+  };
+}
 
-require("@testing-library/jest-dom");
+const g = globalThis as unknown as TestEnvironmentGlobal;
 
-let observers = new Map();
-(global as any).IntersectionObserver = jest
-  .fn()
-  .mockImplementation((callback, options) => ({
-    observe: (node: any) => {
-      observers.set(node, callback);
-    },
-    unobserve: (node: any) => observers.delete(node),
-    disconnect: () => observers.clear(),
-  }));
+if (!g.TextEncoder) g.TextEncoder = TextEncoder;
+if (!g.TextDecoder) g.TextDecoder = TextDecoder;
+if (!g.ReadableStream) g.ReadableStream = ReadableStream;
+if (!g.MessagePort) g.MessagePort = MessagePort;
 
-(global as any).simulateIntersection = (isIntersecting: boolean) => {
+import "@testing-library/jest-dom";
+
+const observers = new Map();
+g.IntersectionObserver = jest.fn().mockImplementation((callback) => ({
+  observe: (node: Element) => {
+    observers.set(node, callback);
+  },
+  unobserve: (node: Element) => observers.delete(node),
+  disconnect: () => observers.clear(),
+}));
+
+g.simulateIntersection = (isIntersecting: boolean) => {
   observers.forEach((callback) => {
     callback([{ isIntersecting, target: {} }]);
   });
@@ -34,9 +47,8 @@ jest.mock("@/lib/actions", () => ({
 }));
 
 export const mockGuestId = "test-guest-id-12345";
-if (!global.crypto) {
-  // @ts-ignore
-  global.crypto = {};
+if (!g.crypto) {
+  // @ts-expect-error: need to mock crypto object for tests
+  g.crypto = {};
 }
-// @ts-ignore
-global.crypto.randomUUID = jest.fn(() => mockGuestId);
+g.crypto.randomUUID = jest.fn(() => mockGuestId);

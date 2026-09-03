@@ -1,7 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import InfinitePhotoList from "@/components/InfinitePhotoList";
-import { searchPhotos } from "@/lib/pexels";
+
 import { mockPhotoList } from "@/__mocks__/pexelsData";
+import InfinitePhotoList from "@/components/InfinitePhotoList";
+import { TestEnvironmentGlobal } from "@/jest-setup";
+import { searchPhotos } from "@/lib/pexels";
 
 jest.mock("next/navigation", () => ({
   useSearchParams: jest
@@ -44,7 +46,7 @@ describe("InfinitePhotoList Integration", () => {
     };
 
     (searchPhotos as jest.Mock).mockImplementation(
-      () => new Promise((res) => setTimeout(() => res(nextBatch), 200))
+      () => new Promise((res) => setTimeout(() => res(nextBatch), 200)),
     );
 
     render(<InfinitePhotoList initialPhotos={initial} />);
@@ -52,14 +54,14 @@ describe("InfinitePhotoList Integration", () => {
     Object.defineProperty(window, "scrollY", { value: 100, writable: true });
 
     waitFor(() => {
-      (global as any).simulateIntersection(true);
+      (global as unknown as TestEnvironmentGlobal).simulateIntersection(true);
     });
 
     const loader = await screen.findByTestId("infinite-photo-list-loader");
 
     expect(loader).toBeInTheDocument();
     expect(
-      await screen.findByRole("img", { name: /peaceful wildflower/i })
+      await screen.findByRole("img", { name: /peaceful wildflower/i }),
     ).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
+import { Suspense } from "react";
+
 import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
-import { Suspense } from "react";
 
 interface IDefaultModalPageProps {
   params: Promise<{ id: string }>;

@@ -1,10 +1,12 @@
 "use client";
+import { useParams, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import MasonryGrid from "@/components/MasonryGrid";
 import { searchPhotos } from "@/lib/pexels";
 import { Photo } from "@/lib/types";
-import { useCallback, useEffect, useRef, useState } from "react";
-import MasonryGrid from "@/components/MasonryGrid";
+
 import Loader from "./Loader";
-import { useParams, useSearchParams } from "next/navigation";
 
 interface IInfinitePhotoListProps {
   initialPhotos: Photo[];
@@ -34,7 +36,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
           const uniqueNewPhotos =
             newPhotos.photos?.filter(
               (newPhoto) =>
-                !prev.some((existing) => existing.id === newPhoto.id)
+                !prev.some((existing) => existing.id === newPhoto.id),
             ) ?? [];
           return [...prev, ...uniqueNewPhotos];
         });
@@ -60,7 +62,7 @@ const InfinitePhotoList = ({ initialPhotos }: IInfinitePhotoListProps) => {
       },
       {
         threshold: 0.1,
-      }
+      },
     );
 
     if (observerTarget.current) {

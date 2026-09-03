@@ -1,5 +1,6 @@
+import { render, screen } from "@testing-library/react";
+
 import Loader from "@/components/Loader";
-import { screen, render } from "@testing-library/react";
 
 describe("Loader", () => {
   it("renders loader", async () => {

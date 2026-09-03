@@ -1,6 +1,7 @@
-import { screen, render, fireEvent } from "@testing-library/react";
-import SearchBar from "@/components/SearchBar";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+
+import SearchBar from "@/components/SearchBar";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -41,7 +42,6 @@ describe("SearchBar", () => {
     const user = userEvent.setup();
     const newQuery = "texture";
 
-    const submitBtn = screen.getByRole("button", { name: /search/i });
     const form = screen.getByRole("form", { name: /search-form/i });
 
     await user.clear(input);

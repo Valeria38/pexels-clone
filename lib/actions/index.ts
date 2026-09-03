@@ -1,15 +1,15 @@
 "use server";
 import { revalidatePath } from "next/cache";
+
 import { createClient } from "../supabase/server";
 
 export async function toggleLikeAction(
   photoId: number,
   shouldLike: boolean,
   guestId?: string,
-
 ) {
   const supabase = await createClient();
-  console.log('shouldLike', shouldLike);
+  console.log("shouldLike", shouldLike);
   if (shouldLike) {
     const { error } = await supabase
       .from("likes")

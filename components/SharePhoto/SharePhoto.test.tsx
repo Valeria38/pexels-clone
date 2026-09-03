@@ -1,8 +1,10 @@
-import SharePhoto from "@/components/SharePhoto";
-import { render, within, screen, waitFor } from "@testing-library/react";
+import "jest-location-mock";
+
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { toast } from "sonner";
-import "jest-location-mock";
+
+import SharePhoto from "@/components/SharePhoto";
 
 const mockWriteText = jest.fn();
 Object.defineProperty(navigator, "clipboard", {
@@ -77,7 +79,7 @@ describe("SharePhoto", () => {
     await user.click(copyButton);
 
     waitFor(() =>
-      expect(mockWriteText).toHaveBeenCalledWith(`${origin}/${mockParams.id}`)
+      expect(mockWriteText).toHaveBeenCalledWith(`${origin}/${mockParams.id}`),
     );
   });
 
@@ -107,7 +109,7 @@ describe("SharePhoto", () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalled();
       expect(toast.error).toHaveBeenCalledWith(
-        expect.stringContaining(errorMessage)
+        expect.stringContaining(errorMessage),
       );
     });
     spy.mockRestore();

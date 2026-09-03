@@ -1,7 +1,8 @@
 "use client";
-import { handleDownload } from "@/lib/utils";
 import ArrowDownTrayIcon from "@heroicons/react/24/outline/ArrowDownTrayIcon";
+
 import Button from "@/components/Button";
+import { handleDownload } from "@/lib/utils";
 
 interface IDownloadPhotoProps {
   imageUrl: string;

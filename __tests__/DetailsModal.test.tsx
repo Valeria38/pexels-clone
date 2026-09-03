@@ -1,6 +1,6 @@
-import { screen, render } from "@testing-library/react";
-import DetailsModal from "@/components/DetailsModal";
+import { render, screen } from "@testing-library/react";
 
+import DetailsModal from "@/components/DetailsModal";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -25,7 +25,7 @@ const modalProps = {
   isLiked: false,
   width: imgWidth,
   height: imgHeight,
-  guestId: 'test-guest-id'
+  guestId: "test-guest-id",
 };
 
 const setup = () => {
@@ -42,10 +42,10 @@ describe("DetailsModal", () => {
 
     expect(dialog).toHaveAttribute("data-open");
     expect(closeIcon).toBeInTheDocument();
-    expect(images.length).toBe(2);
+    expect(images).toHaveLength(2);
     expect(images[0]).toHaveAttribute(
       "src",
-      expect.stringContaining("auto%3Dcompress")
+      expect.stringContaining("auto%3Dcompress"),
     );
     expect(images[1]).toHaveAttribute("src", expect.stringContaining(imgId));
   });
@@ -54,7 +54,7 @@ describe("DetailsModal", () => {
     setup();
 
     const imgContainer = await screen.findByTestId(
-      "details-modal-image-container"
+      "details-modal-image-container",
     );
 
     expect(imgContainer).toHaveStyle(`aspect-ratio: ${imgWidth / imgHeight}`);

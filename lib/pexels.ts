@@ -1,5 +1,6 @@
 "use server";
 import { cacheLife } from "next/cache";
+
 import { ImageResponse, Photo } from "./types";
 
 const headers = {
@@ -12,7 +13,7 @@ export async function getPhotos(page: number = 1): Promise<ImageResponse> {
     {
       headers,
       method: "GET",
-    }
+    },
   );
   const res = await response.json();
   return res;
@@ -32,7 +33,7 @@ export async function getPhoto(id: string): Promise<Photo> {
 
 export async function searchPhotos(
   query: string,
-  page: number = 1
+  page: number = 1,
 ): Promise<ImageResponse> {
   "use cache";
   cacheLife("hours");
@@ -41,7 +42,7 @@ export async function searchPhotos(
     {
       headers,
       method: "GET",
-    }
+    },
   );
   return await response.json();
 }

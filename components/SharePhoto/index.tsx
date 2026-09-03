@@ -1,22 +1,24 @@
 "use client";
-import ShareIcon from "@heroicons/react/24/outline/ShareIcon";
-import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
-import { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import ShareIcon from "@heroicons/react/24/outline/ShareIcon";
+import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { copyLink } from "@/lib/utils";
-import Button from "../Button";
+import { useState } from "react";
+
 import copyUrl from "@/assets/copy.svg";
-import threadsUrl from "@/assets/threads.svg";
-import linkedinUrl from "@/assets/linkedin.svg";
 import fbUrl from "@/assets/facebook.svg";
+import linkedinUrl from "@/assets/linkedin.svg";
+import threadsUrl from "@/assets/threads.svg";
 import xUrl from "@/assets/x.svg";
+import { copyLink } from "@/lib/utils";
+
+import Button from "../Button";
 
 interface SharePhotoProps {
   url: string;
@@ -105,9 +107,9 @@ const SharePhoto = ({ url, photographer }: SharePhotoProps) => {
               </div>
 
               <div className="mt-6 px-4 mb-10">
-                <label className="text-gray-600 text-sm mb-3 block font-medium">
+                <div className="text-gray-600 text-sm mb-3 block font-medium">
                   Add a link to this photo
-                </label>
+                </div>
 
                 <div className="w-full p-2 md:p-2.5 flex items-center justify-between bg-gray-50 rounded-xl border border-gray-100 group">
                   <span className="text-gray-950 truncate font-medium text-sm select-all">

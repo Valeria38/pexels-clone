@@ -1,7 +1,8 @@
-import Modal, { IModalProps } from "@/components/Modal";
 import { render, screen, waitFor } from "@testing-library/react";
-import { getPhoto } from "@/lib/pexels";
+
+import Modal, { IModalProps } from "@/components/Modal";
 import { mockGuestId } from "@/jest-setup";
+import { getPhoto } from "@/lib/pexels";
 
 jest.mock("@/lib/pexels", () => ({
   getPhoto: jest.fn().mockImplementation(async () => {
@@ -28,8 +29,8 @@ jest.mock("@/lib/supabase/server", () => ({
     select: jest.fn().mockReturnThis(),
     eq: jest.fn().mockReturnThis(),
     maybeSingle: jest.fn().mockResolvedValue({ data: null, error: null }),
-    single: jest.fn().mockResolvedValue({ data: null, error: null })
-  })
+    single: jest.fn().mockResolvedValue({ data: null, error: null }),
+  }),
 }));
 
 jest.mock("next/headers", () => ({
@@ -38,9 +39,7 @@ jest.mock("next/headers", () => ({
       if (name === "guest_id") return { value: mockGuestId };
       return undefined;
     }),
-    getAll: () => [
-      { name: 'guest_id', value: mockGuestId }
-    ],
+    getAll: () => [{ name: "guest_id", value: mockGuestId }],
     set: () => jest.fn(),
   })),
 }));
