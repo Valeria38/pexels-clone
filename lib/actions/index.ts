@@ -9,6 +9,7 @@ export async function toggleLikeAction(
 
 ) {
   const supabase = await createClient();
+  console.log('shouldLike', shouldLike);
   if (shouldLike) {
     const { error } = await supabase
       .from("likes")

@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Details page', () => {
+  test.describe.configure({ mode: 'serial' });
+
   test.beforeEach(async ({ page }) => {
     await page.goto("/12377231");
     await page.waitForLoadState("networkidle");
