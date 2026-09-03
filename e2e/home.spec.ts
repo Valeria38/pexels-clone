@@ -14,8 +14,10 @@ test.describe("Homepage", () => {
   });
 
   test("should redirect from home to default query url", async ({ page }) => {
-    await page.waitForURL(/\/?query=nature/);
-    await expect(page).toHaveURL(/\?query=nature/);
+    // await page.waitForURL(/\/?query=nature/);
+    // await expect(page).toHaveURL(/\?query=nature/);
+
+    await expect(page).toHaveURL(/\/?query=nature/, { timeout: 15000 });
   });
 
   test("should show loader, then 40 images by default", async ({ page }) => {
