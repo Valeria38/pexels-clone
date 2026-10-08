@@ -1,9 +1,10 @@
 "use client";
 import { Input } from "@headlessui/react";
 import MagnifyingGlassIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
-import Button from "../Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useState } from "react";
+
+import Button from "../Button";
 
 interface ISearchBarProps {
   initialQuery: string;

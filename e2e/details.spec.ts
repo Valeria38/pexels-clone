@@ -1,23 +1,25 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from "@playwright/test";
 
-test.describe('Details page', () => {
-  test.describe.configure({ mode: 'serial' });
+test.describe("Details page", () => {
+  test.describe.configure({ mode: "serial" });
 
   test.beforeEach(async ({ page }) => {
     await page.goto("/12377231");
     await page.waitForLoadState("networkidle");
   });
 
-  test('should render details page', async ({ page }) => {
-    const viewPhotographerProfileLink = page.getByRole('link', { name: /view profile/i });
-    const href = viewPhotographerProfileLink.getAttribute('href');
-    const likeBtn = page.getByRole('button', { name: /like-photo/i })
-    const shareBtn = page.getByRole('button', { name: /share-photo/i })
-    const downloadBtn = page.getByRole('button', { name: /download-photo/i })
-    const imgContainer = page.getByTestId('details-photo');
-    const img = imgContainer.locator('img');
-    const src = img.getAttribute('src');
-    const alt = img.getAttribute('alt');
+  test("should render details page", async ({ page }) => {
+    const viewPhotographerProfileLink = page.getByRole("link", {
+      name: /view profile/i,
+    });
+    const href = viewPhotographerProfileLink.getAttribute("href");
+    const likeBtn = page.getByRole("button", { name: /like-photo/i });
+    const shareBtn = page.getByRole("button", { name: /share-photo/i });
+    const downloadBtn = page.getByRole("button", { name: /download-photo/i });
+    const imgContainer = page.getByTestId("details-photo");
+    const img = imgContainer.locator("img");
+    const src = img.getAttribute("src");
+    const alt = img.getAttribute("alt");
     const tagsText = page.getByText(/Popular tags/i);
     const mainColorText = page.getByText(/Main Color/i);
 
@@ -29,79 +31,89 @@ test.describe('Details page', () => {
     await expect(mainColorText).toBeVisible();
     await expect(tagsText).toBeVisible();
     await expect(imgContainer).toBeVisible();
-    await expect(img).toHaveAttribute('src');
+    await expect(img).toHaveAttribute("src");
     expect(src).toBeTruthy();
     expect(alt).toBeTruthy();
   });
 
-
-  test('should copy photo url to clipboard on copy button click', async ({ page, context }) => {
+  test("should copy photo url to clipboard on copy button click", async ({
+    page,
+    context,
+  }) => {
     const browserName = page.context().browser()?.browserType().name();
 
-    if (browserName === 'chromium') {
-      await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    if (browserName === "chromium") {
+      await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     }
 
-    const shareBtn = page.getByRole('button', { name: /share-photo/i });
+    const shareBtn = page.getByRole("button", { name: /share-photo/i });
     await shareBtn.click();
 
-    const shareModal = page.getByRole('dialog');
-    await expect(shareModal).toHaveAttribute('data-headlessui-state', 'open');
+    const shareModal = page.getByRole("dialog");
+    await expect(shareModal).toHaveAttribute("data-headlessui-state", "open");
 
-    const heading = shareModal.getByRole('heading', { name: /share this with your community/i });
+    const heading = shareModal.getByRole("heading", {
+      name: /share this with your community/i,
+    });
     await expect(heading).toHaveText(/share this with your community/i);
 
-    const copyBtn = shareModal.getByRole('button', { name: /copy-url-button/i });
+    const copyBtn = shareModal.getByRole("button", {
+      name: /copy-url-button/i,
+    });
     await expect(copyBtn).toBeVisible();
 
     await copyBtn.click();
 
+    const expectedUrl = await page.evaluate(
+      () => window.location.origin + window.location.pathname,
+    );
 
-    const expectedUrl = await page.evaluate(() => window.location.origin + window.location.pathname);
-
-
-    if (browserName === 'chromium') {
-      const copiedText = await page.evaluate(() => navigator.clipboard.readText());
+    if (browserName === "chromium") {
+      const copiedText = await page.evaluate(() =>
+        navigator.clipboard.readText(),
+      );
       expect(copiedText).toBe(expectedUrl);
     } else {
-      const successToast = page.getByText('Copied!');
+      const successToast = page.getByText("Copied!");
       await expect(successToast).toBeVisible();
     }
   });
 
-  test('should send like POST request to server on like button click', async ({ page }) => {
-    const likeBtn = page.getByRole('button', { name: /like-photo/i });
+  test("should send like POST request to server on like button click", async ({
+    page,
+  }) => {
+    const likeBtn = page.getByRole("button", { name: /like-photo/i });
 
     const [request] = await Promise.all([
       page.waitForRequest(
         (request) =>
-          request.method() === 'POST' &&
-          request.url().endsWith('/12377231')
+          request.method() === "POST" && request.url().endsWith("/12377231"),
       ),
       likeBtn.click(),
     ]);
 
     expect(request).toBeTruthy();
-    expect(request.method()).toBe('POST');
+    expect(request.method()).toBe("POST");
 
     const response = await page.waitForResponse(
       (response) =>
-        response.status() === 200 &&
-        response.url().endsWith('/12377231')
+        response.status() === 200 && response.url().endsWith("/12377231"),
     );
 
     expect(response.ok()).toBe(true);
   });
 
-  test('should download photo on download button click', async ({ page }) => {
-    const downloadBtn = page.getByRole('button', { name: /download-photo/i });
+  test("should download photo on download button click", async ({ page }) => {
+    const downloadBtn = page.getByRole("button", { name: /download-photo/i });
 
     const [download] = await Promise.all([
-      page.waitForEvent('download'),
+      page.waitForEvent("download"),
       downloadBtn.click(),
     ]);
 
-    expect(download.suggestedFilename()).toContain('Dense_greenery_in_a_tranquil_forest_setting_with_tall_trees_and_natural_light');
+    expect(download.suggestedFilename()).toContain(
+      "Dense_greenery_in_a_tranquil_forest_setting_with_tall_trees_and_natural_light",
+    );
     expect(await download.path()).toBeTruthy();
   });
-})
+});

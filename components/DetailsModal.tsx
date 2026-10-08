@@ -1,12 +1,13 @@
 "use client";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import Image from "next/image";
-import SharePhoto from "./SharePhoto";
-import { useRouter } from "next/navigation";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import DownloadPhoto from "./DownloadPhoto";
 import LikeButton from "./LikeButton";
-import { useState } from "react";
+import SharePhoto from "./SharePhoto";
 
 export interface IDetailsModalProps {
   previewSrc: string;
@@ -28,7 +29,7 @@ const DetailsModal = ({
   isLiked,
   width,
   height,
-  guestId
+  guestId,
 }: IDetailsModalProps) => {
   const format = src.split(".")[src.split(".").length - 1];
   const { back } = useRouter();
@@ -74,8 +75,9 @@ const DetailsModal = ({
                 alt={alt}
                 fill
                 onLoad={() => setLoading(true)}
-                className={`relative z-10 object-contain duration-500 ${loading ? "opacity-100" : "opacity-0"
-                  }`}
+                className={`relative z-10 object-contain duration-500 ${
+                  loading ? "opacity-100" : "opacity-0"
+                }`}
               />
             </div>
 
@@ -86,7 +88,11 @@ const DetailsModal = ({
                   imageUrl={src}
                   filename={`${alt.split(" ").join("_")}.${format}`}
                 />
-                <LikeButton photoId={photoId} isLiked={isLiked} guestId={guestId} />
+                <LikeButton
+                  photoId={photoId}
+                  isLiked={isLiked}
+                  guestId={guestId}
+                />
               </div>
             </div>
           </DialogPanel>

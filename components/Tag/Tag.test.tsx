@@ -1,6 +1,7 @@
-import { screen, render } from "@testing-library/react";
-import Tag from "@/components/Tag";
+import { render, screen } from "@testing-library/react";
 import { StaticImageData } from "next/image";
+
+import Tag from "@/components/Tag";
 
 const mockStaticImage: StaticImageData = {
   src: "/_next/static/media/wallpaper.avif",

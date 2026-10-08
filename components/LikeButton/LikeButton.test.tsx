@@ -1,19 +1,19 @@
-import LikeButton from "@/components/LikeButton";
 import {
-  screen,
-  render,
-  waitFor,
   fireEvent,
+  render,
+  screen,
+  waitFor,
   within,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import * as actions from "@/lib/actions";
+
+import LikeButton from "@/components/LikeButton";
 import { mockGuestId } from "@/jest-setup";
+import * as actions from "@/lib/actions";
 
 const buttonProps = {
   photoId: 1,
   isLiked: false,
-  guestId: mockGuestId
+  guestId: mockGuestId,
 };
 
 describe("LikeButton", () => {
@@ -36,12 +36,12 @@ describe("LikeButton", () => {
     render(<LikeButton {...buttonProps} />);
     const consoleSpy = jest
       .spyOn(console, "error")
-      .mockImplementation(() => { });
+      .mockImplementation(() => {});
     (actions.toggleLikeAction as jest.Mock).mockRejectedValue(
       () =>
         new Promise((_, reject) => {
           setTimeout(() => reject(new Error("Server Error")), 500);
-        })
+        }),
     );
 
     const btn = screen.getByRole("button");
@@ -60,7 +60,7 @@ describe("LikeButton", () => {
         expect(icon).toHaveClass("text-white");
         expect(icon).not.toHaveClass("text-red-500");
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     expect(consoleSpy).toHaveBeenCalled();

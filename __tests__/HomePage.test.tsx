@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { useRouter } from "next/navigation";
+
 import Page, { HomePageProps } from "@/app/page";
 import { popularTags } from "@/components/Tags";
-import { useRouter } from "next/navigation";
 
 const mockPush = jest.fn();
 jest.mock("next/navigation", () => ({
@@ -41,7 +42,7 @@ describe("Home page", () => {
 
     expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/search photos\.\.\./i)
+      screen.getByPlaceholderText(/search photos\.\.\./i),
     ).toBeInTheDocument();
   });
   it("renders tags", async () => {
@@ -49,12 +50,12 @@ describe("Home page", () => {
 
     popularTags.forEach((tag) => {
       expect(
-        screen.getByText(new RegExp(`^${tag.value}$`, "i"))
+        screen.getByText(new RegExp(`^${tag.value}$`, "i")),
       ).toBeInTheDocument();
     });
     popularTags.forEach((tag) => {
       expect(
-        screen.getByRole("img", { name: new RegExp(`^${tag.value}$`, "i") })
+        screen.getByRole("img", { name: new RegExp(`^${tag.value}$`, "i") }),
       ).toBeInTheDocument();
     });
   });
@@ -77,18 +78,7 @@ describe("Home page", () => {
     const { push } = useRouter();
     expect(push).toHaveBeenCalledWith("/?query=nature");
   });
-  it("calls router.push() with correct params", async () => {
-    const ui = await Page(mockProps);
-    const { container } = render(ui);
 
-    const form = within(container).getByRole("form", {
-      name: /search-form/i,
-    });
-    fireEvent.submit(form);
-
-    const { push } = useRouter();
-    expect(push).toHaveBeenCalledWith("/?query=nature");
-  });
   it("calls router.push() with correct params after search form submit with the new query value", async () => {
     const newQuery = "cat";
     const ui = await Page(mockProps);

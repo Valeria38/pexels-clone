@@ -1,9 +1,10 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
 import { mockPhotoList } from "@/__mocks__/pexelsData";
 import MasonryGrid, {
   IPhotoImageProps,
   PhotoImage,
 } from "@/components/MasonryGrid";
-import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 
 const gridProps = {
   photos: mockPhotoList,
@@ -45,7 +46,7 @@ describe("PhotoImage", () => {
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute(
       "src",
-      expect.stringContaining(encodeURIComponent(src))
+      expect.stringContaining(encodeURIComponent(src)),
     );
   });
 

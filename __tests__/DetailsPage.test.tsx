@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import DetailsPage, { PhotoDetailsProps } from "@/app/[id]/page";
+
 import { mockPhotoDetails, photographerUrl } from "@/__mocks__/pexelsData";
+import DetailsPage, { PhotoDetailsProps } from "@/app/[id]/page";
 
 jest.mock("@/lib/pexels", () => ({
   getPhoto: jest.fn().mockImplementation(async () => {
@@ -15,8 +16,8 @@ jest.mock("@/lib/supabase/server", () => ({
     select: jest.fn().mockReturnThis(),
     eq: jest.fn().mockReturnThis(),
     maybeSingle: jest.fn().mockResolvedValue({ data: null, error: null }),
-    single: jest.fn().mockResolvedValue({ data: null, error: null })
-  })
+    single: jest.fn().mockResolvedValue({ data: null, error: null }),
+  }),
 }));
 
 const mockGuestId = "test_guest_id";
@@ -26,9 +27,7 @@ jest.mock("next/headers", () => ({
       if (name === "guest_id") return { value: mockGuestId };
       return undefined;
     }),
-    getAll: () => [
-      { name: 'guest_id', value: mockGuestId }
-    ],
+    getAll: () => [{ name: "guest_id", value: mockGuestId }],
     set: () => jest.fn(),
   })),
 }));

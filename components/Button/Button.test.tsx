@@ -1,6 +1,7 @@
-import Button, { IButtonProps } from "@/components/Button";
-import { screen, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import Button, { IButtonProps } from "@/components/Button";
 
 const setup = (props: IButtonProps) => {
   render(<Button {...props} />);

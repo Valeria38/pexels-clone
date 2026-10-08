@@ -1,9 +1,11 @@
 "use client";
-import { Photo } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Masonry from "react-masonry-css";
+
+import { Photo } from "@/lib/types";
+
 import Loader from "../Loader";
 
 interface PhotosProps {
@@ -50,10 +52,11 @@ export const PhotoImage = ({
 };
 
 const MasonryGrid = ({ photos }: PhotosProps) => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // const [mounted, setMounted] = useState(false/);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+  const [mounted] = useState(() => typeof window !== "undefined");
   if (!mounted) return <Loader />;
   return (
     <Masonry

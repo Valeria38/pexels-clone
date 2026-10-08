@@ -1,17 +1,11 @@
 "use client";
 import { Button as HeadlessButton, ButtonProps } from "@headlessui/react";
 import { FC, ReactNode } from "react";
+
 import { cn } from "@/lib/tailwind";
 
 type TColor =
-  | "orange"
-  | "green"
-  | "blue"
-  | "gray"
-  | "amber"
-  | "red"
-  | "purple"
-  | "emerald";
+  "orange" | "green" | "blue" | "gray" | "amber" | "red" | "purple" | "emerald";
 
 export interface IButtonProps extends ButtonProps {
   children: ReactNode;
@@ -48,7 +42,7 @@ const Button: FC<IButtonProps> = ({
         "inline-flex items-center justify-center gap-2 rounded-xl border-2 p-2 font-bold shadow-sm transition-all md:p-3 md:px-5 text-sm md:text-base cursor-pointer",
         "data-[active]:scale-95 data-[focus]:outline-none data-[focus]:ring-2 data-[focus]:ring-offset-2",
         colorVariants[color],
-        className
+        className,
       )}
     >
       {children}

@@ -1,13 +1,14 @@
-import { getPhoto } from "@/lib/pexels";
-import Image from "next/image";
-import SharePhoto from "@/components/SharePhoto";
-import UserIcon from "@heroicons/react/24/outline/UserIcon";
 import InformationCircleIcon from "@heroicons/react/24/outline/InformationCircleIcon";
+import UserIcon from "@heroicons/react/24/outline/UserIcon";
+import { cookies } from "next/headers";
+import Image from "next/image";
+
 import DownloadPhoto from "@/components/DownloadPhoto";
 import LikeButton from "@/components/LikeButton";
-import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
 import ScrollReset from "@/components/ScrollReset";
+import SharePhoto from "@/components/SharePhoto";
+import { getPhoto } from "@/lib/pexels";
+import { createClient } from "@/lib/supabase/server";
 
 export interface PhotoDetailsProps {
   params: Promise<{ id: string }>;
@@ -52,7 +53,11 @@ const PhotoDetails = async ({ params }: PhotoDetailsProps) => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <LikeButton photoId={response.id} isLiked={!!like} guestId={guestId} />
+            <LikeButton
+              photoId={response.id}
+              isLiked={!!like}
+              guestId={guestId}
+            />
             <SharePhoto
               url={response.url}
               photographer={response.photographer}

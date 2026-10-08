@@ -1,7 +1,9 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import DownloadPhoto from ".";
+
 import { handleDownload } from "@/lib/utils";
+
+import DownloadPhoto from ".";
 
 jest.mock("@/lib/utils", () => ({
   handleDownload: jest.fn(),
@@ -34,7 +36,7 @@ describe("DownloadPhoto", () => {
     expect(handleDownload).toHaveBeenCalledTimes(1);
     expect(handleDownload).toHaveBeenCalledWith(
       mockProps.imageUrl,
-      mockProps.filename
+      mockProps.filename,
     );
   });
 });

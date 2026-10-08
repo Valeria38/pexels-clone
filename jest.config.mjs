@@ -1,4 +1,4 @@
-const nextJest = require("next/jest");
+import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
   dir: "./",
@@ -209,4 +209,4 @@ const config = {
   // watchman: true,
 };
 
-module.exports = createJestConfig(config);
+export default createJestConfig(config);

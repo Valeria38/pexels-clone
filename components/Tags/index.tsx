@@ -1,14 +1,15 @@
-import Tag from "../Tag";
-import wallpapaerSrc from "@/assets/wallpaper.avif";
 import bgSrc from "@/assets/background.avif";
+import beachSrc from "@/assets/beach.avif";
+import catSrc from "@/assets/cat.avif";
+import dogSrc from "@/assets/dog.avif";
 import flowersSrc from "@/assets/flowers.avif";
 import landscapeSrc from "@/assets/landscape.avif";
-import dogSrc from "@/assets/dog.avif";
-import catSrc from "@/assets/cat.avif";
-import sunsetSrc from "@/assets/sunset.avif";
-import beachSrc from "@/assets/beach.avif";
 import mountainSrc from "@/assets/mountain.avif";
+import sunsetSrc from "@/assets/sunset.avif";
 import textureSrc from "@/assets/texture.avif";
+import wallpapaerSrc from "@/assets/wallpaper.avif";
+
+import Tag from "../Tag";
 
 export const popularTags = [
   { value: "wallpaper", img: wallpapaerSrc },

@@ -1,6 +1,8 @@
+import { cookies } from "next/headers";
+
 import { getPhoto } from "@/lib/pexels";
 import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+
 import DetailsModal from "../DetailsModal";
 
 export interface IModalProps {

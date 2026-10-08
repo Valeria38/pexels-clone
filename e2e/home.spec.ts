@@ -1,16 +1,14 @@
-import { test, expect } from "@playwright/test";
-
-
+import { expect, test } from "@playwright/test";
 
 test.describe("Homepage", () => {
-  test.describe.configure({ mode: 'serial' });
+  test.describe.configure({ mode: "serial" });
 
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
-  test('should display the page title', async ({ page }) => {
-    await expect(page).toHaveTitle('Pexels clone');
+  test("should display the page title", async ({ page }) => {
+    await expect(page).toHaveTitle("Pexels clone");
   });
 
   test("should redirect from home to default query url", async ({ page }) => {
@@ -48,7 +46,9 @@ test.describe("Homepage", () => {
     await expect(images.first()).not.toHaveAttribute("src", firstSrcBefore!);
   });
 
-  test("should trigger Next.js server request on query change", async ({ page }) => {
+  test("should trigger Next.js server request on query change", async ({
+    page,
+  }) => {
     const searchInput = page.getByRole("textbox", { name: /Search photos/i });
     const button = page.getByRole("button", { name: /Search/i });
 
@@ -78,7 +78,9 @@ test.describe("Homepage", () => {
     await expect(page).toHaveURL(/\?query=sunset/);
   });
 
-  test('should open photo details on click and details page after hard reload', async ({ page }) => {
+  test("should open photo details on click and details page after hard reload", async ({
+    page,
+  }) => {
     const firstImgLink = page.locator(".masonry-grid a").first();
     await firstImgLink.waitFor({ state: "attached" });
     const href = await firstImgLink.getAttribute("href");
@@ -89,11 +91,12 @@ test.describe("Homepage", () => {
     try {
       await expect(modal).toBeVisible({ timeout: 2000 });
     } catch (err) {
+      console.warn(err);
       // Modal did not appear; that's acceptable if the app performed full page navigation.
     }
 
     const currentDetailsUrl = page.url();
-    await page.goto(currentDetailsUrl, { waitUntil: 'networkidle' });
+    await page.goto(currentDetailsUrl, { waitUntil: "networkidle" });
 
     const mainColorText = page.getByText(/Main Color/i);
     const popularTagsText = page.getByText(/Popular tags/i);

@@ -1,8 +1,10 @@
 "use client";
 import HeartIcon from "@heroicons/react/24/solid/HeartIcon";
 import { useState } from "react";
-import Button from "../Button";
+
 import { toggleLikeAction } from "@/lib/actions";
+
+import Button from "../Button";
 
 interface ILikeButtonProps {
   photoId: number;
@@ -34,8 +36,9 @@ const LikeButton = ({ photoId, isLiked, guestId }: ILikeButtonProps) => {
     >
       <HeartIcon
         role="img"
-        className={`size-6 ${liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"
-          }`}
+        className={`size-6 ${
+          liked ? "text-red-500" : "text-white stroke-gray-400 stroke-2"
+        }`}
       />
     </Button>
   );
